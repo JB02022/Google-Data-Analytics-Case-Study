@@ -1,0 +1,9 @@
+In this case study, I will be working for a fictional company called Cyclistic. The goal is to maximize the number of annual members by understanding how casual riders and members use Cyclistic differently. Cyclistic has a fleet of 5,824 bicycles that
+are geotracked and locked into a network of 692 stations across Chicago. I will be using the last 12 months of Cyclistic's historical trip data to analyze and identify trends.
+
+The data is directly from the Cyclistic company, made available by Motivate International Inc. under this license. Due to data-privacy issues personally identifiable information won’t be used. Thus, I will not connect pass purchases to credit card numbers 
+to determine if casual riders live in the Cyclistic service area or if they have purchased multiple single passes. The data is reliable, original, comprehensive, current, and cited. During the analysis, I will be using Excel, SQL, and R. It’s important to 
+clean data so that it’s complete, correct, and relevant to the problem. I will be cleaning the data by fixing incorrect entries, deleting duplicates, removing blanks, and making sure the format is consistent.
+
+
+
