@@ -1,4 +1,4 @@
-I started analyzing my dataset by calculating the mean, min, max, and mode of the ride_length column:
+#I started analyzing my dataset by calculating the mean, min, max, and mode of the ride_length column:
 	
 print(mean(data$ride_length))
 		returns 16.36
@@ -20,36 +20,39 @@ print(mode_value)
 print(median(data$ride_length))
 	returns 10.22
 
-The results show that on average, people ride for 16 minutes, most rides lasted for 4.57 minutes, and half of the rides are under 10.22 minutes and the other half over 10.22 minutes. 
+#The results show that on average, people ride for 16 minutes, most rides lasted for 4.57 minutes, and half of the rides are under 10.22 minutes and the other half over 10.22 minutes. 
 
-To check whether most riders are commuting to and from work, I created a new dataset called data_filtered: 
+#To check whether most riders are commuting to and from work, I created a new dataset called data_filtered: 
+
 	data_filtered <- data %>% filter(day_of_week %in% c(2, 3, 4, 5, 6))
 
-I will now check whether most people who use Cyclistic are commuters by counting how many times people ride between 7 -9 in the morning and between 4 and 7 in the evening:
+#I will now check whether most people who use Cyclistic are commuters by counting how many times people ride between 7 -9 in the morning and between 4 and 7 in the evening:
+
 	print(sum(hour(data_filtered$started_at) >= 7 & hour(data_filtered$started_at) < 10))
 print(sum(hour(data_filtered$started_at) >= 16 & hour(data_filtered$started_at) < 19))
 
-Using the code above, I found that out of 4,318,083 unique rides, 490,767 are during the morning’s rush hour and 925,615 are during the evening’s rush hour. 45.93% (1,416,382) of all riders during the weekdays are commuting during rush hour. 
-The data demonstrates that most riders are most likely not using it to commute but rather for other purposes. I will not further compare the weekday values by comparing members behavior vs casual behavior’s.
+#Using the code above, I found that out of 4,318,083 unique rides, 490,767 are during the morning’s rush hour and 925,615 are during the evening’s rush hour. 45.93% (1,416,382) of all riders during the weekdays are commuting during rush hour. 
+#The data demonstrates that most riders are most likely not using it to commute but rather for other purposes. I will not further compare the weekday values by comparing members behavior vs casual behavior’s.
 
-Furthermore, I filtered the dataset by the member_type so that I can perform further analysis on the data.
+#Furthermore, I filtered the dataset by the customer_type so that I can perform further analysis on the data.
 
-data_filtered_casual <- data_filtered %>% filter(member_type %in% c('casual'))
-data_filtered_member <- data_filtered %>% filter(member_type %in% c('member'))
+data_filtered_casual <- data_filtered %>% filter(customer_type %in% c('casual'))
+data_filtered_member <- data_filtered %>% filter(customer_type %in% c('member'))
 print(sum(hour(data_filtered_casual$started_at) >= 7 & hour(data_filtered_casual$started_at) < 10))
 print(sum(hour(data_filtered_casual$started_at) >= 16 & hour(data_filtered_casual$started_at) < 19))
 print(sum(hour(data_filtered_member$started_at) >= 7 & hour(data_filtered_member$started_at) < 10))
 print(sum(hour(data_filtered_member$started_at) >= 16 & hour(data_filtered_member$started_at) < 19))
 
-All in all, the code shows that 415,437 casual riders use Cyclistic during rush hour vs 1,000,945 for member riders. Members commute to and from work 2.4 times more than casual riders.
+#All in all, the code shows that 415,437 casual riders use Cyclistic during rush hour vs 1,000,945 for member riders. Members commute to and from work 2.4 times more than casual riders.
 
-The code below calculates the average ride length of casual vs member riders:
+#The code below calculates the average ride length of casual vs member riders:
 
-print( data %>% group_by(member_type) %>% summarize(mean_ride_length = mean(ride_length)))
+print( data %>% group_by(customer_type) %>% summarize(mean_ride_length = mean(ride_length)))
 
-The code shows that casual riders use Cyclistic for 22.8 minutes on average whereas members rides for 12.4 minutes on average.
+#The code shows that casual riders use Cyclistic for 22.8 minutes on average whereas members rides for 12.4 minutes on average.
 
-Similarly, the code below is used to calculate the average ride_length per day of the week:
+#Similarly, the code below is used to calculate the average ride_length per day of the week:
+
 print( data %>% group_by(day_of_week) %>% summarize(mean_ride_length = mean(ride_length)))
            1             19.7
            2             15.4
@@ -59,9 +62,10 @@ print( data %>% group_by(day_of_week) %>% summarize(mean_ride_length = mean(ride
            6             16.1
            7             20.0
 
-The result shows that on weekends, the ride duration is much longer (19.85 minutes on average) than during the weekday (14.96 minutes on average).
+#The result shows that on weekends, the ride duration is much longer (19.85 minutes on average) than during the weekday (14.96 minutes on average).
 
-The data shows that in the last year, most of the rides occured on Saturdays (683,570) followed by Thursday (644,485) and Wednesday (637,803).
+#The data shows that in the last year, most of the rides occured on Saturdays (683,570) followed by Thursday (644,485) and Wednesday (637,803).
+
 print(data %>% group_by(day_of_week) %>% summarize(number_of_rides = n()))
            1          551026
            2          554169
@@ -71,8 +75,7 @@ print(data %>% group_by(day_of_week) %>% summarize(number_of_rides = n()))
            6          636838
                           7          683570
 
-I will compare the casual vs member riders and check how much time each rode depending on the day of the week:
-print(data %>%  group_by(day_of_week, member_type) %>%  summarize(total_time_minutes = sum(ride_length)))
+#I will compare the casual vs member riders and check how much time each rode depending on the day of the week: print(data %>%  group_by(day_of_week, customer_type) %>%  summarize(total_time_minutes = sum(ride_length)))
 
 1 casual               	 6,868,393
 1 member                	 3,963,866
@@ -89,7 +92,7 @@ print(data %>%  group_by(day_of_week, member_type) %>%  summarize(total_time_min
 7 casual                	8,910,597
 7 member                	4,771,444
 
-I then proceeded to visualize the number of rides per month by using the code below:
+#I then proceeded to visualize the number of rides per month by using the code below:
 
 data_grouped <- data %>%  
 
@@ -104,24 +107,99 @@ scale_x_discrete(labels = function(x) format(as.Date(paste0(x, "-01")), "%b %Y")
 scale_y_continuous(breaks = seq(0, max(data_grouped$ride_count), by = 50000)) #the breaks argument specifies the positions of tick marks along the y-axis, and seq() creates a sequence of tick marks starting from 0 up to the maximum value of 'ride_count' in the 'data_grouped' dataset, with an increment of 50,000
 
 
-The graph shows that people tend to bike more often when the weather permits (May-Oct).
+#The graph shows that people tend to bike more often when the weather permits (May-Oct).
 
 
-Next, I will check how much each type of customer uses the 3 different bikes by using the following code:
+#Next, I will check how much each type of customer uses the 3 different bikes by using the following code:
 
 rides_by_type <- data %>%
-  group_by(ride_type, member_type) %>%
+  group_by(ride_type, customer_type) %>%
   summarise(ride_count = n())
 
-ggplot(rides_by_type, aes(x = ride_type, y = ride_count, fill = member_type)) +
+ggplot(rides_by_type, aes(x = ride_type, y = ride_count, fill = customer_type)) +
   geom_bar(stat = "identity", position = "dodge") +
-  labs(x = "Ride Type", y = "Ride Count", title = "Ride Count by Member Type and Bike Type") +
-  scale_fill_discrete(name = "Member Type") +
+  labs(x = "Ride Type", y = "Ride Count", title = "Ride Count by Customer Type and Bike Type") +
+  scale_fill_discrete(name = "Customer Type") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-The graph demonstrates that members are more than twice likely to use a classic bike than casual. It also shows that only casuals use docked bike and that members uses electric bikes slightly more than casuals.
+#The graph demonstrates that members are more than twice likely to use a classic bike than casual. It also shows that only casuals use docked bike and that members uses electric bikes slightly more than casuals.
 
 
+#I will now visualize how casuals and members use Cyclistic during rush hour from Monday to Friday:
+
+data_filtered <- data_filtered %>%
+  filter(hour(started_at) >= 7 & hour(started_at) < 10 |
+           hour(started_at) >= 16 & hour(started_at) < 19)
+
+rides_by_time_and_type <- data_filtered %>%
+  group_by(member_type, hour = hour(started_at)) %>%
+summarise(ride_count = n())
+
+ggplot(rides_by_time_and_type, aes(x = hour, y = ride_count, fill = member_type)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Hour", y = "Ride Count", title = "Ride Count by Customer Type and Time Interval") +
+  scale_fill_discrete(name = "Customer Type") +
+  theme_minimal()
+
+#The code below shows how much times each (casuals and members) rode depending on the day of the week. data_filtered <- data
+
+rides_by_customer_and_day <- data_filtered %>%
+  group_by(customer_type, day_of_week) %>%
+  summarise(ride_count = n())
+
+ggplot(rides_by_customer_and_day, aes(x = factor(day_of_week), y = ride_count, fill = customer_type)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Day of Week", y = "Ride Count", title = "Ride Count by Customer Type and Day of Week") +
+  scale_fill_discrete(name = "Customer Type") +
+  theme_minimal() +
+  scale_x_discrete(labels = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")) +
+  scale_y_continuous(breaks = seq(0, max(rides_by_customer_and_day$ride_count), by = 50000))
+
+#The result shows that on weekends, both customer type rode their bike at an equal rate.
+
+#I will now visualize the mean ride length depending on the day of the week for members vs casuals:
+mean_ride_length_by_customer_and_day <- data %>%
+  group_by(customer_type, day_of_week) %>%
+  summarise(mean_ride_length = mean(ride_length))
+
+ggplot(mean_ride_length_by_customer_and_day, aes(x = factor(day_of_week), y = mean_ride_length, fill = customer_type)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Day of Week", y = "Mean Ride Length", title = "Mean Ride Length by Customer Type and Day of Week") +
+  scale_fill_discrete(name = "Customer Type") +
+  theme_minimal() +
+  scale_x_discrete(labels = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"))
+#The data shows that casuals ride for longer during each day of the week than members.
+
+
+#Mean Ride Length by Customer Type and Ride Type
+mean_ride_length_by_ride_and_customer <- data %>%
+  group_by(ride_type, customer_type) %>%
+  summarise(mean_ride_length = mean(ride_length, na.rm = TRUE))
+
+ggplot(mean_ride_length_by_customer_and_ride, aes(x = reorder(ride_type, -mean_ride_length), y = mean_ride_length, fill = customer_type)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Ride Type", y = "Mean Ride Length", title = "Mean Ride Length by Customer Type and Ride Type") +
+  scale_fill_discrete(name = "Customer Type") +
+  theme_minimal() +
+  scale_y_continuous(breaks = seq(0, 50, by = 5), limits = c(0, 50)) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+#The result shows that whenever casuals are using the docked_bike, they tend to ride for twice as long as when they use the classic bike, and approximately 3 times as long as when they use the electric bike.
+
+#Ride Count by Ride Type and Day of Week
+ride_count_by_day_and_ride_type <- data %>%
+  group_by(day_of_week, ride_type) %>%
+  summarise(ride_count = n())
+
+ggplot(ride_count_by_day_and_ride_type, aes(x = factor(day_of_week), y = ride_count, fill = ride_type)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Day of Week", y = "Count", title = "Ride Count by Ride Type and Day of Week") +
+  scale_fill_discrete(name = "Ride Type") +
+  theme_minimal() +
+  scale_y_continuous(breaks = seq(0, 400000, by = 20000), limits = c(0, 400000)) +
+theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+#The result shows that for every day of the week, classic bike is the most popular choice followed by electric bikes. The result also shows that during weekdays, the percentage of electric bikes used is slightly higher than during weekends. As for docked bikes, they are used more frequently during weekends and less frequently during weekdays. 
 
 
 
