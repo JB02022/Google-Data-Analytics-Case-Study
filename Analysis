@@ -107,7 +107,19 @@ scale_y_continuous(breaks = seq(0, max(data_grouped$ride_count), by = 50000)) #t
 The graph shows that people tend to bike more often when the weather permits (May-Oct).
 
 
+Next, I will check how much each type of customer uses the 3 different bikes by using the following code:
 
+rides_by_type <- data %>%
+  group_by(ride_type, member_type) %>%
+  summarise(ride_count = n())
+
+ggplot(rides_by_type, aes(x = ride_type, y = ride_count, fill = member_type)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Ride Type", y = "Ride Count", title = "Ride Count by Member Type and Bike Type") +
+  scale_fill_discrete(name = "Member Type") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+The graph demonstrates that members are more than twice likely to use a classic bike than casual. It also shows that only casuals use docked bike and that members uses electric bikes slightly more than casuals.
 
 
 
