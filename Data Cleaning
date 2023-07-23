@@ -104,9 +104,9 @@ Now I will remove these rows from our dataset to have a better representation of
 	
 data <- data[!(data$ride_length < 1 | data$ride_length > 2160), ]
 
-I renamed the column member_casual to member_type since the title is a better representation of the data that is in that column. I also renamed the column rideable_type to ride_type:
+I renamed 2 columns member_casual to customer_type and rideable_type to ride_type:
 
-data <- data %>% rename(member_type = member_casual)
+data <- data %>% rename(customer_type = member_casual)
 data <- data %>% rename(ride_type = rideable_type)
 
 Next, I created a column called day_of_week which is a number value for each day of the week (1 for Sunday, 2 Monday and so on). I installed the package lubridate library so that I can use the wday() function on the started_at column:
