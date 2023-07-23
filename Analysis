@@ -1,0 +1,132 @@
+I started analyzing my dataset by calculating the mean, min, max, and mode of the ride_length column:
+	
+print(mean(data$ride_length))
+		returns 16.36
+
+print(max(data$ride_length))
+	returns 1767.38
+
+print(min(data$ride_length))
+	returns 1
+
+calculate_mode <- function(x) {
+tbl <- table(x)
+mode_value <- as.numeric(names(tbl)[tbl == max(tbl)])
+return(mode_value)}
+mode_value <- calculate_mode(data$ride_length)
+print(mode_value)
+	returns 4.57
+
+print(median(data$ride_length))
+	returns 10.22
+
+The results show that on average, people ride for 16 minutes, most rides lasted for 4.57 minutes, and half of the rides are under 10.22 minutes and the other half over 10.22 minutes. 
+
+To check whether most riders are commuting to and from work, I created a new dataset called data_filtered: 
+	data_filtered <- data %>% filter(day_of_week %in% c(2, 3, 4, 5, 6))
+
+I will now check whether most people who use Cyclistic are commuters by counting how many times people ride between 7 -9 in the morning and between 4 and 7 in the evening:
+	print(sum(hour(data_filtered$started_at) >= 7 & hour(data_filtered$started_at) < 10))
+print(sum(hour(data_filtered$started_at) >= 16 & hour(data_filtered$started_at) < 19))
+
+Using the code above, I found that out of 4,318,083 unique rides, 490,767 are during the morning’s rush hour and 925,615 are during the evening’s rush hour. 45.93% (1,416,382) of all riders during the weekdays are commuting during rush hour. 
+The data demonstrates that most riders are most likely not using it to commute but rather for other purposes. I will not further compare the weekday values by comparing members behavior vs casual behavior’s.
+
+Furthermore, I filtered the dataset by the member_type so that I can perform further analysis on the data.
+
+data_filtered_casual <- data_filtered %>% filter(member_type %in% c('casual'))
+data_filtered_member <- data_filtered %>% filter(member_type %in% c('member'))
+print(sum(hour(data_filtered_casual$started_at) >= 7 & hour(data_filtered_casual$started_at) < 10))
+print(sum(hour(data_filtered_casual$started_at) >= 16 & hour(data_filtered_casual$started_at) < 19))
+print(sum(hour(data_filtered_member$started_at) >= 7 & hour(data_filtered_member$started_at) < 10))
+print(sum(hour(data_filtered_member$started_at) >= 16 & hour(data_filtered_member$started_at) < 19))
+
+All in all, the code shows that 415,437 casual riders use Cyclistic during rush hour vs 1,000,945 for member riders. Members commute to and from work 2.4 times more than casual riders.
+
+The code below calculates the average ride length of casual vs member riders:
+
+print( data %>% group_by(member_type) %>% summarize(mean_ride_length = mean(ride_length)))
+
+The code shows that casual riders use Cyclistic for 22.8 minutes on average whereas members rides for 12.4 minutes on average.
+
+Similarly, the code below is used to calculate the average ride_length per day of the week:
+print( data %>% group_by(day_of_week) %>% summarize(mean_ride_length = mean(ride_length)))
+           1             19.7
+           2             15.4
+           3             14.4
+           4             14.3
+           5             14.6
+           6             16.1
+           7             20.0
+
+The result shows that on weekends, the ride duration is much longer (19.85 minutes on average) than during the weekday (14.96 minutes on average).
+
+The data shows that in the last year, most of the rides occured on Saturdays (683,570) followed by Thursday (644,485) and Wednesday (637,803).
+print(data %>% group_by(day_of_week) %>% summarize(number_of_rides = n()))
+           1          551026
+           2          554169
+           3          610192
+           4          637803
+           5          644485
+           6          636838
+                          7          683570
+
+I will compare the casual vs member riders and check how much time each rode depending on the day of the week:
+print(data %>%  group_by(day_of_week, member_type) %>%  summarize(total_time_minutes = sum(ride_length)))
+
+1 casual               	 6,868,393
+1 member                	 3,963,866
+2 casual                	4,215,192
+2 member                	4,340,636
+3 casual                	3,781,988
+3 member                	4,985,918
+4 casual                	3,965,368
+4 member                	5,170,811
+5 casual                	4,318,483
+5 member                	5,096,172
+6 casual                	5,513,082
+6 member                	4,725,069
+7 casual                	8,910,597
+7 member                	4,771,444
+
+I then proceeded to visualize the number of rides per month by using the code below:
+
+data_grouped <- data %>%  
+
+group_by(month = format(started_at, "%Y-%m")) %>%    #groups data by month with the year also indicated
+summarize(ride_count = n())    #The resulting 'data_grouped' dataset will have two columns: 'month', which represents the year and month in the format "YYYY-MM," and 'ride_count', which represents the count of rides that occurred in each month.
+
+ggplot(data = data_grouped, aes(x = month, y = ride_count)) +  #defines the variable that goes in the x and y axis of the graph
+geom_col(fill = "blue", width = 0.7) +    #this creates the actual bars for each months
+labs(x = "Month", y = "Ride Count", title = "Ride Count by Month") +  #This labels the x and y axis
+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +   #customize the appearance of the plot to prevent overlapping, the angle 45 makes sure that the name of each bars in the x axis are angled at 45° instead of 0° so that they are readable. Hjust = 1 is the distance between the graph and the name under each bars
+scale_x_discrete(labels = function(x) format(as.Date(paste0(x, "-01")), "%b %Y")) +  #The function takes each value in the 'month' column, appends "-01" to it (to convert it to the first day of the month), and then formats it using the "%b %Y" format (e.g., "Jan 2022").
+scale_y_continuous(breaks = seq(0, max(data_grouped$ride_count), by = 50000)) #the breaks argument specifies the positions of tick marks along the y-axis, and seq() creates a sequence of tick marks starting from 0 up to the maximum value of 'ride_count' in the 'data_grouped' dataset, with an increment of 50,000
+
+
+The graph shows that people tend to bike more often when the weather permits (May-Oct).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
