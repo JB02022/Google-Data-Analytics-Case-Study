@@ -47,9 +47,26 @@ The data is reliable and cleaned and is ready to be analyzed using R.
 
 R: [Data Analysis] https://github.com/JB02022/Google-Data-Analytics-Case-Study/blob/main/Analysis
 
+Firstly, the mean, median, and mode are calculated on the ride_length column. The results show that on average, people ride for 16 minutes, most rides last for 4.57 minutes, and half of the rides are under 10.22 minutes and the other half over 10.22 minutes. 
 
+To check whether most riders are commuting to and from work, I created a new dataset called data_filtered which only include weekdays.
+I will now check whether most people who use Cyclistic are commuters by counting how many times people ride between 7 -9 in the morning and between 4 and 7 in the evening
 
+Using a code, I found that, 490,767 are during the morning’s rush hour and 925,615 are during the evening’s rush hour. 45.93% (1,416,382) of all riders during the weekdays are commuting during rush hour. The data demonstrates that although a high percentage of rides are during rush hour, most are outside of it.
 
+I filtered the dataset by the customer_type (member vs casual) so that I can perform further analysis on the data
+
+All in all, the code shows that 415,437 casual riders use Cyclistic during rush hour vs 1,000,945 for member riders. Members commute to and from work 2.4 times more than casual riders.
+
+I calculated the average ride length of casual vs member riders and found that casual riders use Cyclistic for 22.8 minutes on average whereas members rides for 12.4 minutes on average.
+
+I then proceeded to visualize the number of rides per month.
+![image](https://github.com/JB02022/Google-Data-Analytics-Case-Study/assets/84155766/5666e553-97fa-4d0a-97ff-5da2f4e945e6)
+
+The graph shows that people tend to bike more often when the weather permits (May-Oct).
+
+I then checked how  each type of customer uses the 3 different bikes
+![image](https://github.com/JB02022/Google-Data-Analytics-Case-Study/assets/84155766/29af55bd-9f0f-4663-8d7e-b39957b11030)
 
 
 
