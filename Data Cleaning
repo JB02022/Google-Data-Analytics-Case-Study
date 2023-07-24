@@ -1,4 +1,4 @@
-Firstly, to start the cleaning process, I will create a table using PostgreSQL (PG Admin 4 v7) using the following code below:
+#Firstly, to start the cleaning process, I will create a table using PostgreSQL (PG Admin 4 v7) using the following code below:
 
 CREATE TABLE trip_data (
   ride_id VARCHAR(50) PRIMARY KEY,
@@ -16,14 +16,14 @@ CREATE TABLE trip_data (
   member_casual VARCHAR(50)
 );
 
-Then I imported the CSV data for the last 12 months (July 2022 to June 2023) into the SQL table that I called trip_data. This ensured that all of the data are in one table ready to be cleaned.
+#Then I imported the CSV data for the last 12 months (July 2022 to June 2023) into the SQL table that I called trip_data. This ensured that all of the data are in one table ready to be cleaned.
 
-I checked how much rows are in the dataset to explore the data that I am working on by using the query below:
+#I checked how much rows are in the dataset to explore the data that I am working on by using the query below:
 SELECT COUNT(*) FROM trip_data;
 
-The query returned 5779444 which means that there is going to be a lot of information to work with.
+#The query returned 5779444 which means that there is going to be a lot of information to work with.
 
-I then calculated how much missing values there are in each columns and ran the code:
+#I then calculated how much missing values there are in each columns and ran the code:
 
 SELECT 
   COUNT(CASE WHEN ride_id IS NULL THEN 1 END) AS null_count_ride_id,
@@ -41,12 +41,12 @@ SELECT
   COUNT(CASE WHEN member_casual IS NULL THEN 1 END) AS null_count_member_casual
 FROM trip_data;
 
-The query demonstrated that there are 857860, 857992, 915655, 915796, 5795, and 5795 missing values in the column, start_station_name, start_station_id, end_station_name, end_station_id, start_lat, start_lng, end_lat, and end_lng columns.
+#The query demonstrated that there are 857860, 857992, 915655, 915796, 5795, and 5795 missing values in the column, start_station_name, start_station_id, end_station_name, end_station_id, start_lat, start_lng, end_lat, and end_lng columns.
 
-There are numerous ways deal with missing values in a dataset, you can delete them, replace them with their actual values, and use a value that is very close to the actual values by using a function in a programming language. In this case 
-since the values that are missing should be replaceable by their real value by comparing stations with the ID and lat/lng coordinates, we should be able create a code to replace missing values in these columns. However, this case study states 
-that there are 692 different bike stations. Thus, I will run a code that will count the amount of distinct lat/lng coordinates as well as distinct start_station name and id and end_station name and id. If they are all 692 then I will be able 
-to create a code to fill out the missing values:
+#There are numerous ways to deal with missing values in a dataset, you can delete them, replace them with their actual values, and use a value that is very close to the actual values by using a function in a programming language. In this case, 
+#since the values that are missing should be replaceable by their real value by comparing stations with the ID and lat/lng coordinates, we should be able to create a code to replace missing values in these columns. However, this case study states 
+#that there are 692 different bike stations. Thus, I will run a code that will count the amount of distinct lat/lng coordinates as well as distinct start_station name and id and end_station name and id. If they are all 692 then I will be able 
+#to create a code to fill out the missing values:
 
 SELECT 
     COUNT(DISTINCT end_station_id) AS distinct_end_station_id,
@@ -59,63 +59,63 @@ SELECT
     COUNT(DISTINCT end_lng) AS distinct_end_lng
 FROM trip_data;
 
-The result showed that there are 1820, 1498, 1821, and 1498 distinct values in the start_station_name, start_station_id, end_station_name, and end_station_id columns respectively. There are also 772925, 730231, 13720, and 13834 distinct values in the start_lat, 
-start_lng, end_lat, and end_lng columns respectively. This means that the values represented has some typos or does not represent the stations’ information since there should be no more then 692 of them. I will now proceed with deleted rows with NULL values from 
-these columns by using the query below:
+#The result showed that there are 1820, 1498, 1821, and 1498 distinct values in the start_station_name, start_station_id, end_station_name, and end_station_id columns respectively. There are also 772925, 730231, 13720, and 13834 distinct values in the start_lat, 
+#start_lng, end_lat, and end_lng columns respectively. This means that the values represented have some typos or do not represent the stations’ information since there should be no more than 692 of them. I will now proceed with deleted rows with NULL values from 
+#these columns by using the query below:
 
 DELETE FROM trip_data
 WHERE start_station_name IS NULL OR start_station_id IS NULL OR end_station_name IS NULL OR end_station_id IS NULL OR start_lat IS NULL OR start_lng IS NULL OR end_lat IS NULL OR end_lng IS NULL;
 
-1370355 rows were deleted, thus the remaining amount of rows is: 4409089
+#1370355 rows were deleted, thus the remaining amount of rows is: 4409089
 
-To check for duplicate values, I used the ride_id column for reference as each rides should be unique.
+#To check for duplicate values, I used the ride_id column for reference as each rides should be unique.
 
 SELECT ride_id, COUNT(*) as count
 FROM trip_data
 GROUP BY ride_id
 HAVING COUNT(*) > 1;
 
-There were no duplicate values in this column, thus the data has no duplicate values to remove.
+#There were no duplicate values in this column, thus the data has no duplicate values to remove.
 
-I exported the table from SQL into a CSV document that I will further clean in R.
+#I exported the table from SQL into a CSV document that I will further clean in R.
 
-Using R, I loaded the CSV file in a variable called data:
+#Using R, I loaded the CSV file in a variable called data:
 
 data <- read.csv("trip_data_Jun22_Jul23_NoNULL.csv")
 
-Then, I converted the start_at and ended_at columns into a date-time data type by using the code below:
+#Then, I converted the start_at and ended_at columns into a date-time data type by using the code below:
 
 data[['started_at']] <- as.POSIXct(data[['started_at']], format = "%Y-%m-%d %H:%M:%S")
 data[['ended_at']] <- as.POSIXct(data[['ended_at']], format = "%Y-%m-%d %H:%M:%S")
 
-This will allow me to do calculations on these columns which can lead to important conclusions.
-I then used the “str(data)” line to make sure that the data was properly converted and that the other columns are the correct data type.
-Furthermore, I created a new column called ride_length which is the duration of the ride (ended_at – started_at) in minutes by using the code below:
+#This will allow me to do calculations on these columns which can lead to important conclusions.
+#I then used the “str(data)” line to make sure that the data was properly converted and that the other columns are the correct data type.
+#Furthermore, I created a new column called ride_length which is the duration of the ride (ended_at – started_at) in minutes by using the code below:
 
 data$ride_length <- as.numeric(difftime(data$ended_at, data$started_at, units = "mins"))
 
-I then proceeded to identify the outlier values by using 2 codes below to count how much rides are under 1 min and how much rides are over 36 hours:
+#I then proceeded to identify the outlier values by using 2 codes below to count how much rides are under 1 min and how much rides are over 36 hours:
 	
 print(sum(data$ride_length < 1))
 print(sum(data$ride_length > 2160))
 
-There were 90,992 rides under 1 minute and 14 rides over 36 hours (4,318,083 rows are left for analysis).
-Now I will remove these rows from our dataset to have a better representation of the population:
+#There were 90,992 rides under 1 minute and 14 rides over 36 hours (4,318,083 rows are left for analysis).
+#Now I will remove these rows from our dataset to have a better representation of the population:
 	
 data <- data[!(data$ride_length < 1 | data$ride_length > 2160), ]
 
-I renamed 2 columns member_casual to customer_type and rideable_type to ride_type:
+#I renamed 2 columns member_casual to customer_type and rideable_type to ride_type:
 
 data <- data %>% rename(customer_type = member_casual)
 data <- data %>% rename(ride_type = rideable_type)
 
-Next, I created a column called day_of_week which is a number value for each day of the week (1 for Sunday, 2 Monday and so on). I installed the package lubridate library so that I can use the wday() function on the started_at column:
+#Next, I created a column called day_of_week which is a number value for each day of the week (1 for Sunday, 2 Monday and so on). I installed the package lubridate library so that I can use the wday() function on the started_at column:
 
 install.packages("lubridate")
 library(lubridate)
 data$day_of_week <- wday(data$started_at)
 
-I checked my work by using the code below to ensure that the values in the day_of_week column are consistent:
+#I checked my work by using the code below to ensure that the values in the day_of_week column are consistent:
 
 head(data, n = 10)
 
