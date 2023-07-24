@@ -112,7 +112,21 @@ The result shows that whenever casuals are using the docked bike, they tend to r
 The graph also shows that casuals rides classic bikes for approximately twice as long than members but the ride length for electric bikes between casuals and members is relatively the same.
 
 
-
+Summary:
+  
+|Casual|Member|
+|------|------|
+|Use bike less frequently than members but for a longer period of time.|Uses Cyclistic more often during weekday's rush hour (7am-10am and 4pm-7pm).|
+|Likes the docked bike option and uses it more often during weekends.|Never use the docked bike.|
+|Use electric bike and classic bike at a relatively similar level.|Prefers classic bikes and rides them more than twice as much as casuals.|  
+  
+### Act
+In conclusion, after analyzing the differences between casuals and members, a marketing strategies to convert casual riders members can be implemented.  
+Recommendations:  
+1. Firstly, a marketing initiative can be implemented during the start of the biking season (end of April-May).
+2. Marketing campaign aimed at casual riders can pinpoint the benefits of riding a bike for commuting during workdays instead of relying on public transportation or cars. 
+3. Since casual riders use their bikes for a longer duration than members it is also important to advertise the benefits of being a member (there are no fees depending on ride length, only 1 flat fee per year).
+   
 
 
 
