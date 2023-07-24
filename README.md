@@ -65,8 +65,61 @@ I then proceeded to visualize the number of rides per month.
 
 The graph shows that people tend to bike more often when the weather permits (May-Oct).
 
+
+
 I then checked how  each type of customer uses the 3 different bikes
 ![image](https://github.com/JB02022/Google-Data-Analytics-Case-Study/assets/84155766/29af55bd-9f0f-4663-8d7e-b39957b11030)
+
+The "Electric Bike" were used 40.14% more times by members (1,007,327 rides).
+Casual customers seem to prefer "Docked Bikes" more often (137,476 rides) than members who did not use it once.
+The "Classic Bikes" were used 110.97% more times by members (1,664,042 rides). 
+
+
+
+Next, I visualized the ride count by ride type and day of week
+![image](https://github.com/JB02022/Google-Data-Analytics-Case-Study/assets/84155766/37cdff2a-d55e-4a2f-8abf-37e7a2a30fc4)
+
+The result shows that for every day of the week, classic bike is the most popular choice followed by electric bikes. The result also shows that during weekdays, the percentage of electric bikes used is slightly higher than during weekends. As for docked bikes, they are used more frequently during weekends and less frequently during weekdays. 
+
+
+
+I continued my analysis by creating a graphical representation of the ride count by customer type during rush hour.
+![image](https://github.com/JB02022/Google-Data-Analytics-Case-Study/assets/84155766/7a60288e-c4fa-40af-9578-6d7f39ca5a14)
+
+The graph shows that during morning rush hour, members tend to use Cyclistic more than 3 times as much compared to casual customers and close to 2 times as much during evenin rush hour.
+
+
+
+The graph below represent the ride count by the day of the week.
+![image](https://github.com/JB02022/Google-Data-Analytics-Case-Study/assets/84155766/9d83818a-ec8b-4186-b0c6-528d06d3a493)
+
+The result shows that on weekends, both customer type rode the bike at an equal rate, however, during the weekdays, members rode their bike more often than casuals.
+
+
+
+The visualization below is the mean ride length depending on the day of the week.
+![image](https://github.com/JB02022/Google-Data-Analytics-Case-Study/assets/84155766/32fb5793-b632-4925-9e5f-9ec3beb58be3)
+
+The data shows that casuals ride for longer during each day of the week than members, especially during weekends.
+On weekends, casuals rode on average for 26.06 minutes vs 13.88 minutes for members (a 85.7% increase). During weekdays, casuals rode on average for 20.92 minutes vs 11.91 minutes for members (a 75.6% increase).
+
+
+
+I then created a graph of the mean ride length by customer type and ride type.
+![image](https://github.com/JB02022/Google-Data-Analytics-Case-Study/assets/84155766/b8ba6f87-42e9-4046-ad70-0da51ce52fd6)
+
+The result shows that whenever casuals are using the docked bike, they tend to ride for twice as long as when they use the classic bike, and approximately 3 times as long as when they use the electric bike.
+The graph also shows that casuals rides classic bikes for approximately twice as long than members but the ride length for electric bikes between casuals and members is relatively the same.
+
+
+
+
+
+
+
+
+
+
 
 
 
