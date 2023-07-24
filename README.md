@@ -44,6 +44,7 @@ SQL Query: [Data Combining](https://github.com/JB02022/Google-Data-Analytics-Cas
 
 ### Analyze
 The data is reliable and cleaned and is ready to be analyzed using R.
+
 R: [Data Analysis] https://github.com/JB02022/Google-Data-Analytics-Case-Study/blob/main/Analysis
 
 
