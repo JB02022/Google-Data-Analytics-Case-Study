@@ -122,7 +122,8 @@ Summary:
   
 ### Act
 In conclusion, after analyzing the differences between casuals and members, a marketing strategies to convert casual riders members can be implemented.  
-Recommendations:  
+
+Suggestions:  
 1. Firstly, a marketing initiative can be implemented during the start of the biking season (end of April-May).
 2. Marketing campaign aimed at casual riders can pinpoint the benefits of riding a bike for commuting during workdays instead of relying on public transportation or cars. 
 3. Since casual riders use their bikes for a longer duration than members it is also important to advertise the benefits of being a member (there are no fees depending on ride length, only 1 flat fee per year).
